@@ -2,7 +2,6 @@ console.log('Client.js is loaded');
 
 document.getElementById('startButton').addEventListener('click', startBot);
 document.getElementById('stopButton').addEventListener('click', stopBot);
-document.getElementById('changePlayerButton').addEventListener('click', changePlayer);
 document.getElementById('command').addEventListener('keyup', handleCommandInput); // Добавим обработчик для события нажатия клавиши
 const socket = io();
 
@@ -107,40 +106,6 @@ function drawChart() {
       setInterval(updateOnlinePlayers, 10000); // Устанавливаем интервал обновления каждые 10 секунд
     })
     .catch(error => console.error('Ошибка получения данных:', error));
-}
-
-
-
-function changePlayer() {
-  const playerNameInput = document.getElementById('playerNameInput').value;
-  const playerNumberInput = document.getElementById('playerNumberInput').value;
-
-  if (!playerNameInput || !playerNumberInput) {
-    alert('Введите ник и номер игрока');
-    return;
-  }
-
-  console.log('Sending payload:', { playerName: playerNameInput, playerNumber: parseInt(playerNumberInput, 10) });
-
-  const payload = {
-    playerName: playerNameInput,
-    playerNumber: parseInt(playerNumberInput, 10)
-  };
-
-  fetch('/changePlayer', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-  .then(response => response.json())
-  .then(data => {
-    alert(data.message);
-  })
-  .catch(error => {
-    console.error('Error changing player:', error);
-  });
 }
 
 
